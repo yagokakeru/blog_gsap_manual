@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <title>実装サンプル ー【GSAP入門】使い方となにができるのか</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="https://kakechimaru.com/wp-content/themes/kakechimaru/image/favicon.ico">
+
+    <script src="https://unpkg.com/gsap@3.11.3/dist/gsap.min.js"></script>
+
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        html,
+        body{
+            height: 100%;
+        }
+
+        body{
+            background-color: #000;
+        }
+
+        .section{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        .box{
+            background-color: #fff;
+            width: 30px;
+            height: 30px;
+        }
+        .box:nth-child(n+2){
+            margin-top: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="section" id="section">
+        <div class="box box1"></div>
+        <div class="box box2"></div>
+    </section>
+
+
+    <script>
+        gsap.registerEffect({
+            name: 'fadeIn', // アニメーションの名前
+            // 未指定の場合のデフォルト値を設定
+            defaults: { duration: 2, x: 30, repeat: -1, ease: 'Power4.Out' },
+            // アニメーションを設定
+            effect: (targets, config) => {
+                return gsap.fromTo(targets, config.duration, 
+                            { x: 0 },
+                            { x: config.x, ease: config.ease, repeat: config.repeat }
+                        );
+            },
+            extendTimeline: true, // gsap.timeline()で使えるようにする
+        });
+
+        // 最低限の記述
+        gsap.effects.fadeIn('.box1');
+        // デフォルト値を変更する
+        gsap.effects.fadeIn('.box2', { duration: .5, x: 100 });
+    </script>
+</body>
+
+</html>

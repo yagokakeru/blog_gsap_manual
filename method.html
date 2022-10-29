@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <title>実装サンプル ー【GSAP入門】使い方となにができるのか</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="https://kakechimaru.com/wp-content/themes/kakechimaru/image/favicon.ico">
+
+    <script src="https://unpkg.com/gsap@3.11.3/dist/gsap.min.js"></script>
+
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        html,
+        body{
+            height: 100%;
+        }
+
+        body{
+            background-color: #000;
+        }
+
+        .section{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        .title{
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 25px;
+            text-align: center;
+        }
+        .title span{
+            display: block;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .box{
+            background-color: #fff;
+            margin-top: 15px;
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="section" id="section">
+        <div class="title">to<span>今の状態 → x方向に50px</span></div>
+        <div class="box to"></div>
+
+        <div class="title">from<span>x方向に50px → 元の状態</span></div>
+        <div class="box from"></div>
+
+        <div class="title">fromTo<span>x方向に-50px → x方向に50px</span></div>
+        <div class="box fromTo"></div>
+
+        <div class="title">set<span>x方向に50px</span></div>
+        <div class="box set"></div>
+    </section>
+
+
+    <script>
+        // 今の状態 → x方向に50px
+        gsap.to('.to', 1, { x: 50, repeat: -1 });
+
+        // x方向に50px → 元の状態
+        gsap.from('.from', 1, { x: 50, repeat: -1 });
+
+        // x方向に-50px → x方向に50px
+        gsap.fromTo('.fromTo', 1,
+            { x: -50 },
+            { x: 50, repeat: -1 }
+        );
+        
+        // x方向に50px
+        gsap.set('.set', { x: 50 });
+    </script>
+</body>
+
+</html>

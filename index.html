@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <title>実装サンプル ー【GSAP入門】使い方となにができるのか</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="https://kakechimaru.com/wp-content/themes/kakechimaru/image/favicon.ico">
+
+    <script src="https://unpkg.com/gsap@3.11.3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3.11.3/dist/ScrollTrigger.min.js"></script>
+
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        html,
+        body{
+            height: 100%;
+        }
+
+        body{
+            background-color: #000;
+        }
+
+        .title{
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .sub_title{
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .box{
+            background-color: #fff;
+            width: 50px;
+            height: 50px;
+        }
+
+        .section_first{
+            padding-top: 200px;
+            padding-bottom: 200px;
+        }
+
+        .first_container{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 50px);
+            gap: 50px 30px;
+            justify-content: center;
+            padding-top: 50px;
+        }
+        
+        .section_second{
+            padding-top: 200px;
+            padding-bottom: 200px;
+        }
+
+        .start_container,
+        .end_container,
+        .center_container,
+        .random_container{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 50px);
+            gap: 50px 30px;
+            justify-content: center;
+            padding-top: 25px;
+        }
+
+        .section_third{
+            padding-top: 200px;
+            padding-bottom: 200px;
+        }
+
+        .third_container{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 250px);
+            gap: 50px 30px;
+            justify-content: center;
+            padding-top: 50px;
+        }
+
+        .third_wrap{
+            overflow: hidden;
+            padding-top: 100%;
+            width: 100%;
+            position: relative;
+        }
+
+        .third_img{
+            display: block;
+            width: 100%;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .third_wrap:nth-child(3) .third_img{
+            width: auto;
+            height: 100%;
+        }
+
+        .section_force{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .section_force .title{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .scale_box{
+            background-color: #969696;
+            width: 100%;
+            height: 100%;
+            transform: scale(0.0);
+        }
+
+        .section_fifth{
+            display: flex;
+            align-items: center;
+            margin-top: 100px;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .section_fifth_container{
+            display: flex;
+            align-items: center;
+            padding-right: 100px;
+            height: 100%;
+            position: absolute;
+        }
+
+        .section_fifth .title{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100%;
+            white-space: nowrap;
+        }
+
+        .fifth_wrap{
+            border-radius: 10px;
+            overflow: hidden;
+            width: 100vw;
+            height: 90vh;
+            position: relative;
+        }
+        .fifth_wrap:nth-child(n+2){
+            margin-left: 25px;
+        }
+        .fifth_wrap::after{
+            content: "";
+            background-color: #969696;
+            mix-blend-mode: multiply;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .fifth_img{
+            display: block;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .section_six{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .btn{
+            border: 1px solid #fff;
+            border-radius: 1000px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            letter-spacing: .24em;
+            font-weight: bold;
+            width: 200px;
+            height: 45px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- jQueryでの簡単に実装できるアニメーションはもちろん -->
+    <section class="section_first">
+        <h2 class="title">一般的なアニメーションはもちろん・・・</h2>
+        <div class="first_container">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+    </section>
+
+    <!-- 順番にアニメーション（どこからアニメーションさせるか） -->
+    <section class="section_second">
+        <h2 class="title">要素を順番にアニメーションさせたり・・・</h2>
+
+        <h3 class="sub_title">要素順にアニメーション</h3>
+        <div class="start_container">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+        <h3 class="sub_title">逆からアニメーション</h3>
+        <div class="end_container">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+        <h3 class="sub_title">中央からアニメーション</h3>
+        <div class="center_container">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+        <h3 class="sub_title">ランダムアニメーション</h3>
+        <div class="random_container">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+    </section>
+    
+    <!-- スクロールに合わせたアニメーション -->
+    <section class="section_third">
+        <h2 class="title">スクロール量に合わせてアニメーションさせたり・・・</h2>
+        <div class="third_container">
+            <div class="third_wrap">
+                <img class="third_img" src="https://source.unsplash.com/5FG4jz-JrRk/">
+            </div>
+            <div class="third_wrap">
+                <img class="third_img" src="https://source.unsplash.com/r-GRb_jrwX4/">
+            </div>
+            <div class="third_wrap">
+                <img class="third_img" src="https://source.unsplash.com/7akyRHL0xto/">
+            </div>
+        </div>
+    </section>
+
+    <section class="section_force">
+        <!-- 画面を固定するアニメーションさせたり -->
+        <h2 class="title">画面を固定するアニメーションさせたり・・・</h2>
+        <div class="scale_box"></div>
+    </section>
+
+    <section class="section_fifth">
+        <!-- 横スクロールアニメーション -->
+        <div class="section_fifth_container">
+            <h2 class="title">横スクロールアニメーションさせたり・・・</h2>
+            <div class="fifth_wrap">
+                <img class="fifth_img" src="https://source.unsplash.com/S0XCBrxoBtA/">
+            </div>
+            <div class="fifth_wrap">
+                <img class="fifth_img" src="https://source.unsplash.com/ts4Y8-wTDWM/">
+            </div>
+            <div class="fifth_wrap">
+                <img class="fifth_img" src="https://source.unsplash.com/a0KogSy7Rbw/">
+            </div>
+            <div class="fifth_wrap">
+                <img class="fifth_img" src="https://source.unsplash.com/HS22F339-sk/">
+            </div>
+            <div class="fifth_wrap">
+                <img class="fifth_img" src="https://source.unsplash.com/nRi2sTi8xS0/">
+            </div>
+        </div>
+    </section>
+
+    <section class="section_six">
+        <a class="btn" href="https://kakechimaru.com/gsap_basis/" target="_blank">記事に戻る</a>
+    </section>
+
+
+    <script>
+        window.addEventListener('load', () => {
+            gsap.registerEffect({
+                name: 'fadeIn',
+                defaults: { duration: 1, y: 30, ease: 'Power4.Out', repeat: -1, repeatDelay: 1, each: .3, from: 'start' },
+                effect: (targets, config) => {
+                    return gsap.fromTo(targets, config.duration,
+                        { autoAlpha: 0, y: config.y, },
+                        { autoAlpha: 1, y: 0, ease: config.ease, repeat: config.repeat, repeatDelay: config.repeatDelay,
+                        stagger: { each: config.each, from: config.from } }
+                    );
+                },
+                extendTimeline: true,
+            });
+
+            gsap.registerEffect({
+                name: 'parallaxImg',
+                defaults: { duration: 1, top: '0', left: '0', ease: 'linear', scrub: 1 },
+                effect: (targets, config) => {
+                    return gsap.to(targets, config.duration, { top: config.top, left: config.left, ease: config.ease, scrollTrigger: { trigger: targets, start: 'top bottom', end: 'bottom top', scrub: config.scrub, } });
+                },
+                extendTimeline: true,
+            });
+
+            gsap.effects.fadeIn('.first_container .box', { each: 0 });
+            gsap.effects.fadeIn('.start_container .box');
+            gsap.effects.fadeIn('.end_container .box', { from: 'end' });
+            gsap.effects.fadeIn('.center_container .box', { from: 'center' });
+            gsap.effects.fadeIn('.random_container .box', { from: 'random' });
+
+            const thirdWrapDOM = document.querySelector('.third_wrap');
+            const thirdImgDOMs = document.querySelectorAll('.third_img');
+            const thirdWrapDOMW = thirdWrapDOM.offsetWidth;
+            const thirdWrapDOMH = thirdWrapDOM.offsetHeight;
+            thirdImgDOMs.forEach((element, index) => {
+                const thirdImgDOMW = element.width;
+                const thirdImgDOMH = element.height;
+                const deviate = Math.max(thirdImgDOMW, thirdImgDOMH) - Math.max(thirdWrapDOMW, thirdWrapDOMH);
+                
+                if(thirdImgDOMW > thirdImgDOMH){
+                    gsap.effects.parallaxImg(element, { left: -deviate });
+                }else{
+                    gsap.effects.parallaxImg(element, { top: -deviate });
+                }
+            })
+
+            gsap.to('.scale_box', {
+                scale: 1,
+                scrollTrigger: {
+                    trigger: '.section_force',
+                    start: 'top top',
+                    end: 'bottom top',
+                    pin: true,
+                    scrub: 1,
+                }
+            });
+
+            const sectionFifthDOM = document.querySelector('.section_fifth');
+            const sectionFifthContainerDOM = document.querySelector('.section_fifth_container');
+
+            gsap.to(sectionFifthContainerDOM, {
+                x: () =>  -(sectionFifthContainerDOM.clientWidth - sectionFifthDOM.clientWidth),
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: sectionFifthDOM,
+                    start: 'top top',
+                    end: () => `+=${sectionFifthContainerDOM.clientWidth - sectionFifthDOM.clientWidth}`,
+                    pin: true,
+                    scrub: true,
+                }
+            });
+
+            class btnAnim {
+                constructor(target) {
+                    const data = target.getBoundingClientRect();
+                    this.el = {
+                        target: target,
+                        x: data.x,
+                        y: data.y,
+                        w: data.width,
+                        h: data.height,
+                    }
+
+                    this.gravity = Math.min(15, this.el.w / 2);
+
+                    this.mouse = {
+                        x: 0,
+                        y: 0,
+                        cx: 0,
+                        cy: 0,
+                    }
+
+                    this.flag = false;
+
+                    this.el.target.addEventListener('mouseenter', this.mouseEnter.bind(this), false);
+                    this.el.target.addEventListener('mouseleave', this.mouseLeave.bind(this), false);
+                    this.mouseMove = this._mouseMove.bind(this);
+                    window.addEventListener('scroll', this.adjustment.bind(this), false);
+                    window.addEventListener('resize', this.adjustment.bind(this), false);
+
+                    this.onRaf();
+                }
+
+                _mouseMove(e) {
+                    this.mouse.x = gsap.utils.mapRange(this.el.x, this.el.x + this.el.w, -this.gravity, this.gravity, e.clientX);
+                    this.mouse.y = gsap.utils.mapRange(this.el.y, this.el.y + this.el.h, -this.gravity, this.gravity, e.clientY);
+                }
+
+                mouseEnter() {
+                    this.flag = true;
+                    gsap.to(this.el.target, {
+                        scale: 1.02,
+                        duration: 0.3,
+                    })
+                    addEventListener('mousemove', this.mouseMove);
+                }
+
+                mouseLeave() {
+                    this.flag = false;
+                    this.mouse.cx = 0;
+                    this.mouse.cy = 0;
+
+                    gsap.to(this.el.target, {
+                        x: 0,
+                        y: 0,
+                        scale: 1.0,
+                        duration: 0.5,
+                        ease: 'elastic.out(1, 0.3)'
+                    })
+                    removeEventListener('mousemove', this.mouseMove);
+                }
+
+                adjustment() {
+                    const data = this.el.target.getBoundingClientRect();
+                    this.el = {
+                        target: this.el.target,
+                        x: data.x,
+                        y: data.y,
+                        w: data.width,
+                        h: data.height,
+                    }
+                }
+
+                onRaf() {
+                    if(this.flag){
+                        this.mouse.cx = gsap.utils.interpolate(this.mouse.cx, this.mouse.x, 0.1);
+                        this.mouse.cy = gsap.utils.interpolate(this.mouse.cy, this.mouse.y, 0.1);
+                        gsap.set(this.el.target, {
+                            x: this.mouse.cx,
+                            y: this.mouse.cy,
+                        });
+                    }
+
+                    requestAnimationFrame(this.onRaf.bind(this));
+                }
+            }
+
+            const btnDOM = document.querySelector('.btn');
+            new btnAnim(btnDOM);
+        });
+    </script>
+</body>
+
+</html>
